@@ -1,0 +1,94 @@
+/* src/app/dashboard.css */
+
+.dashboard-layout .ant-layout-content {
+  padding: 24px;
+  min-height: calc(100vh - 64px); /* Assuming a header of 64px if one were present */
+}
+
+.dashboard-title {
+  margin-bottom: 24px !important;
+  text-align: center;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  color: #333; /* Example: A dark color for the title */
+}
+
+.summary-card-value .ant-statistic-content-value {
+  font-size: 24px !important;
+  font-weight: bold !important;
+}
+
+.summary-card-trend {
+  font-size: 12px;
+  margin-left: 8px;
+}
+
+.summary-card-trend.positive {
+  color: #52c41a; /* AntD success color */
+}
+
+.summary-card-trend.negative {
+  color: #ff4d4f; /* AntD error color */
+}
+
+.sales-card .ant-card-body {
+  padding: 20px;
+}
+
+.sales-card-statistic .ant-statistic-content-value {
+  font-size: 28px !important;
+  font-weight: bold !important;
+}
+
+.sales-card-subtext {
+  color: #888;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.sales-card-trend-icon {
+  margin-right: 4px;
+}
+
+.chart-card .ant-card-head-title {
+  font-size: 18px !important;
+  font-weight: bold !important;
+}
+
+.sidebar-metric-card .ant-statistic-content-value {
+  font-size: 22px !important;
+  font-weight: bold !important;
+}
+
+.table-section .ant-card-head-title {
+  font-size: 18px !important;
+  font-weight: bold !important;
+}
+
+.ai-suggestion-card .ant-card-head-title {
+  font-size: 18px !important;
+  font-weight: bold !important;
+}
+
+.ai-suggestion-card .ant-form-item {
+  margin-bottom: 16px;
+}
+
+.ai-results {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+}
+
+.ai-results h4 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: var(--ant-primary-color);
+}
+
+.ai-results p {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
