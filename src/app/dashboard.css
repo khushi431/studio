@@ -1,5 +1,25 @@
 /* src/app/dashboard.css */
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .dashboard-layout .ant-layout-content {
   padding: 24px;
   min-height: calc(100vh - 64px); /* Assuming a header of 64px if one were present */
@@ -10,7 +30,21 @@
   text-align: center;
   font-size: 28px !important;
   font-weight: 700 !important;
-  color: #333; /* Example: A dark color for the title */
+  color: hsl(var(--foreground)); /* Use theme variable */
+  opacity: 0; /* Initial state for animation */
+  animation: fadeIn 0.6s ease-out 0.1s forwards;
+}
+
+/* General styles for cards in the dashboard */
+.dashboard-layout .ant-card {
+  opacity: 0; /* Initial state for animation */
+  animation: fadeInUp 0.5s ease-out 0.3s forwards; /* Stagger slightly after title */
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.dashboard-layout .ant-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.06);
 }
 
 .summary-card-value .ant-statistic-content-value {
@@ -24,11 +58,11 @@
 }
 
 .summary-card-trend.positive {
-  color: #52c41a; /* AntD success color */
+  color: #38a169; /* Softer green */
 }
 
 .summary-card-trend.negative {
-  color: #ff4d4f; /* AntD error color */
+  color: #e53e3e; /* Softer red */
 }
 
 .sales-card .ant-card-body {
@@ -41,7 +75,7 @@
 }
 
 .sales-card-subtext {
-  color: #888;
+  color: hsl(var(--muted-foreground)); /* Use theme variable */
   font-size: 14px;
   margin-top: 4px;
 }
@@ -53,7 +87,12 @@
 .chart-card .ant-card-head-title {
   font-size: 18px !important;
   font-weight: bold !important;
+  color: hsl(var(--foreground)); /* Use theme variable */
 }
+.chart-card .ant-card-body {
+    padding-top: 20px; 
+}
+
 
 .sidebar-metric-card .ant-statistic-content-value {
   font-size: 22px !important;
@@ -63,11 +102,13 @@
 .table-section .ant-card-head-title {
   font-size: 18px !important;
   font-weight: bold !important;
+  color: hsl(var(--foreground)); /* Use theme variable */
 }
 
 .ai-suggestion-card .ant-card-head-title {
   font-size: 18px !important;
   font-weight: bold !important;
+  color: hsl(var(--foreground)); /* Use theme variable */
 }
 
 .ai-suggestion-card .ant-form-item {
@@ -76,19 +117,39 @@
 
 .ai-results {
   margin-top: 20px;
-  padding: 16px;
-  background-color: #f9f9f9;
-  border: 1px solid #e8e8e8;
-  border-radius: 4px;
+  padding: 20px;
+  background-color: hsl(var(--card)); /* Use theme var for background */
+  border: 1px solid hsl(var(--border)); /* Use theme var for border */
+  border-radius: var(--radius);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  opacity: 0; /* Initial state for animation */
+  animation: fadeIn 0.5s ease-out 0.2s forwards; /* Delay to animate after parent card */
 }
 
-.ai-results h4 {
+.ai-results h4 { /* Title component from AntD might need more specific selector or styled via props */
   margin-top: 0;
-  margin-bottom: 8px;
-  color: var(--ant-primary-color);
+  margin-bottom: 12px;
+  color: hsl(var(--primary));
+  font-weight: 600;
 }
 
 .ai-results p {
-  margin-bottom: 8px;
-  line-height: 1.6;
+  margin-bottom: 10px;
+  line-height: 1.7;
+  color: hsl(var(--foreground));
 }
+
+.ai-results p strong {
+    color: hsl(var(--primary));
+}
+
+/* Subtle hover effect for buttons */
+.ant-btn-primary:hover, 
+.ant-btn-default:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.ant-btn {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
