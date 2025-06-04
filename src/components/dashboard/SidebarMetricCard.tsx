@@ -2,49 +2,78 @@
 "use client";
 
 import type { ReactNode } from 'react';
-import { Card, Statistic, Typography } from 'antd';
+import { Card, Statistic, Typography, Space, Avatar } from 'antd';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
+import { ResponsiveContainer, LineChart, Line, Tooltip } from 'recharts';
 
-const { Text, Paragraph } = Typography;
+const { Text } = Typography;
+
+interface ChartDataPoint {
+  name: string;
+  [key: string]: any; 
+}
 
 interface SidebarMetricCardProps {
-  title?: string;
+  icon: ReactNode;
+  iconBgClass: string; // e.g. bg-sky-100
+  iconColorClass: string; // e.g. text-sky-600
+  title: string;
   value: string | number;
-  infoText?: string;
-  trendValue?: string;
-  trendDirection?: 'up' | 'down';
-  trendColor?: 'green' | 'red';
-  icon?: ReactNode; // Optional: if an icon needs to be displayed with the metric
+  trendValue: string;
+  trendDirection: 'up' | 'down';
+  chartData: ChartDataPoint[];
+  chartDataKey: string;
+  chartColor: string; // HSL or hex string for the chart line
 }
 
 const SidebarMetricCard: React.FC<SidebarMetricCardProps> = ({
+  icon,
+  iconBgClass,
+  iconColorClass,
   title,
   value,
-  infoText,
   trendValue,
   trendDirection,
-  trendColor,
-  icon,
+  chartData,
+  chartDataKey,
+  chartColor,
 }) => {
-  const trendIcon = trendDirection === 'up' ? <ArrowUpOutlined /> : <ArrowDownOutlined />;
-  const actualTrendColor = trendColor === 'green' ? '#52c41a' : (trendColor === 'red' ? '#ff4d4f' : undefined);
+  const trendAntIcon = trendDirection === 'up' ? <ArrowUpOutlined /> : <ArrowDownOutlined />;
+  const trendStyleColor = trendDirection === 'up' ? 'text-green-500' : 'text-red-500';
 
   return (
-    <Card className="sidebar-metric-card" style={{ marginBottom: '16px' }}>
-      {title && <Text strong style={{ display: 'block', marginBottom: infoText || trendValue ? '8px' : '0' }}>{title}</Text>}
-      {infoText && <Paragraph type="secondary" style={{ fontSize: '12px', marginBottom: '8px' }}>{infoText}</Paragraph>}
-      
-      <Statistic
-        title={icon ? <span style={{ fontSize: '20px', marginRight: '8px' }}>{icon}</span> : ''}
-        value={value}
-        valueStyle={{ fontSize: '22px', fontWeight: 'bold', color: trendDirection ? actualTrendColor : undefined}}
-      />
-
-      {trendValue && trendDirection && (
-        <Text style={{ color: actualTrendColor, fontSize: '12px', marginTop: '4px', display: 'inline-block' }}>
-          {trendIcon} {trendValue}
-        </Text>
-      )}
+    <Card bodyStyle={{ padding: '12px' }} className="sidebar-metric-compact-card">
+      <div style={{ height: '30px', marginBottom: '8px' }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={chartData} margin={{ top: 5, right: 0, left: 0, bottom: 0 }}>
+            <Line type="monotone" dataKey={chartDataKey} stroke={chartColor} strokeWidth={2} dot={false} />
+             <Tooltip 
+                contentStyle={{ fontSize: '10px', padding: '2px 5px', display: 'none' }} // Hide tooltip for these small charts
+             />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+      <Space align="center" style={{ width: '100%', justifyContent: 'space-between' }}>
+        <div>
+          <Text style={{ fontSize: '12px', color: 'hsl(var(--muted-foreground))', display: 'block' }}>{title}</Text>
+          <Space align="baseline">
+            <Statistic
+              value={value}
+              valueStyle={{ fontSize: '18px', fontWeight: '600', lineHeight: '1.2' }}
+            />
+            <Text className={`${trendStyleColor} text-xs ml-1`}>
+              {trendAntIcon}
+              {trendValue}
+            </Text>
+          </Space>
+        </div>
+        <Avatar 
+          className={`${iconBgClass} ${iconColorClass}`}
+          size={32} 
+          icon={icon} 
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}
+        />
+      </Space>
     </Card>
   );
 };

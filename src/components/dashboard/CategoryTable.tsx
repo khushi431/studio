@@ -20,12 +20,13 @@ const columns: TableColumnsType<Category> = [
     title: 'Category',
     dataIndex: 'category',
     key: 'category',
+    render: (text) => <span style={{fontSize: '12px'}}>{text}</span>,
   },
   {
     title: 'Sales',
     dataIndex: 'sales',
     key: 'sales',
-    render: (sales) => `$${sales.toLocaleString()}`,
+    render: (sales) => <span style={{fontSize: '12px'}}>{`$${sales.toLocaleString()}`}</span>,
     sorter: (a, b) => a.sales - b.sales,
   },
   {
@@ -34,9 +35,9 @@ const columns: TableColumnsType<Category> = [
     key: 'trend',
     render: (_, record) => {
       const trendIcon = record.trendDirection === 'up' ? <ArrowUpOutlined /> : <ArrowDownOutlined />;
-      const color = record.trendDirection === 'up' ? '#52c41a' : '#ff4d4f';
+      const color = record.trendDirection === 'up' ? 'text-green-500' : 'text-red-500';
       return (
-        <Text style={{ color }}>
+        <Text className={`${color} text-xs`}>
           {trendIcon} {record.trendValue}
         </Text>
       );
@@ -49,7 +50,7 @@ const data: Category[] = [
   { key: '2', category: 'Groceries', sales: 8500, trendValue: '-2.1%', trendDirection: 'down' },
   { key: '3', category: 'Home Goods', sales: 12300, trendValue: '+8.0%', trendDirection: 'up' },
   { key: '4', category: 'Apparel', sales: 7800, trendValue: '+5.5%', trendDirection: 'up' },
-  { key: '5', category: 'Sports', sales: 9600, trendValue: '-1.5%', trendDirection: 'down' },
+  // { key: '5', category: 'Sports', sales: 9600, trendValue: '-1.5%', trendDirection: 'down' },
 ];
 
 const menuItems: MenuProps['items'] = [
@@ -61,11 +62,11 @@ const menu = <Menu items={menuItems} />;
 
 const CategoryTable: React.FC = () => {
   return (
-    <Card className="table-section">
-      <Space style={{ width: '100%', justifyContent: 'space-between', marginBottom: '20px' }}>
-        <Title level={4} style={{ margin: 0 }}>Top Product Categories</Title>
-        <Dropdown overlay={menu}>
-          <Button>
+    <Card className="table-section" bodyStyle={{padding: '16px'}}>
+      <Space style={{ width: '100%', justifyContent: 'space-between', marginBottom: '12px' }}>
+        <Title level={5} style={{ margin: 0, fontSize: '16px', fontWeight: 600 }}>Top Product Categories</Title>
+        <Dropdown overlay={menu} trigger={['click']}>
+           <Button size="small" type="text" style={{fontSize: '12px', color: 'hsl(var(--primary))'}}>
             View All <DownOutlined />
           </Button>
         </Dropdown>
@@ -73,8 +74,9 @@ const CategoryTable: React.FC = () => {
       <Table<Category>
         columns={columns}
         dataSource={data}
-        pagination={{ pageSize: 5 }}
+        pagination={{ pageSize: 4, size: 'small' }}
         scroll={{ x: 'max-content' }}
+        size="small"
       />
     </Card>
   );

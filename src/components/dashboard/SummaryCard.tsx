@@ -2,7 +2,7 @@
 "use client";
 
 import type { ReactNode } from 'react';
-import { Card, Statistic, Typography, Space } from 'antd';
+import { Card, Statistic, Typography, Space, Avatar } from 'antd';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 
 const { Text } = Typography;
@@ -11,54 +11,45 @@ interface SummaryCardProps {
   title: string;
   value: string | number;
   icon: ReactNode;
+  iconBgColor?: string; // Tailwind class for background, e.g., 'bg-blue-500'
+  iconColor?: string;   // Tailwind class for icon color, e.g., 'text-white'
   trendValue: string;
   trendDirection: 'up' | 'down';
-  trendColor?: 'green' | 'red';
-  iconBgColor?: string;
 }
 
 const SummaryCard: React.FC<SummaryCardProps> = ({
   title,
   value,
   icon,
+  iconBgColor = 'bg-gray-200',
+  iconColor = 'text-gray-700',
   trendValue,
   trendDirection,
-  trendColor,
-  iconBgColor = 'transparent',
 }) => {
   const trendIcon = trendDirection === 'up' ? <ArrowUpOutlined /> : <ArrowDownOutlined />;
-  const trendStyleClass = trendDirection === 'up' ? 'positive' : 'negative';
-  
-  // Use specific antd colors if not overridden by CSS
-  const antdTrendColor = trendColor === 'green' ? '#52c41a' : (trendColor === 'red' ? '#ff4d4f' : undefined);
+  const trendStyleColor = trendDirection === 'up' ? 'text-green-500' : 'text-red-500';
 
   return (
-    <Card>
-      <Space direction="horizontal" align="center" style={{ width: '100%', justifyContent: 'space-between' }}>
-        <Statistic
-          title={<Text style={{ fontSize: '14px', color: '#555' }}>{title}</Text>}
-          value={value}
-          precision={typeof value === 'number' && !Number.isInteger(value) ? 2 : 0}
-          className="summary-card-value"
-        />
-        <div style={{ 
-          backgroundColor: iconBgColor, 
-          padding: '12px', 
-          borderRadius: '50%', 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'center',
-          fontSize: '24px', // Adjust icon size here
-        }}>
-          {icon}
-        </div>
-      </Space>
-      <div style={{ marginTop: '10px' }}>
-        <Text className={`summary-card-trend ${trendStyleClass}`} style={{ color: antdTrendColor }}>
-          {trendIcon} {trendValue}
-        </Text>
-        <Text type="secondary" style={{ marginLeft: '5px', fontSize: '12px' }}>vs last month</Text>
+    <Card bodyStyle={{ padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} className="summary-card">
+      <div>
+        <Text style={{ fontSize: '12px', color: 'hsl(var(--muted-foreground))', display: 'block', marginBottom: '4px' }}>{title}</Text>
+        <Space align="baseline">
+          <Statistic
+            value={value}
+            valueStyle={{ fontSize: '20px', fontWeight: '600', lineHeight: '1.2' }}
+          />
+          <Text className={`${trendStyleColor} text-xs ml-1`}>
+            {trendIcon}
+            {trendValue}
+          </Text>
+        </Space>
       </div>
+      <Avatar
+        className={`${iconBgColor} ${iconColor}`}
+        size={40}
+        icon={icon}
+        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      />
     </Card>
   );
 };

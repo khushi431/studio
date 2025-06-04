@@ -3,7 +3,7 @@
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(15px);
+    transform: translateY(10px); /* Slightly less Y translation */
   }
   to {
     opacity: 1;
@@ -21,135 +21,185 @@
 }
 
 .dashboard-layout .ant-layout-content {
-  padding: 24px;
-  min-height: calc(100vh - 64px); /* Assuming a header of 64px if one were present */
-}
-
-.dashboard-title {
-  margin-bottom: 24px !important;
-  text-align: center;
-  font-size: 28px !important;
-  font-weight: 700 !important;
-  color: hsl(var(--foreground)); /* Use theme variable */
-  opacity: 0; /* Initial state for animation */
-  animation: fadeIn 0.6s ease-out 0.1s forwards;
+  padding: 16px; /* Reduced padding */
+  min-height: 100vh;
 }
 
 /* General styles for cards in the dashboard */
 .dashboard-layout .ant-card {
-  opacity: 0; /* Initial state for animation */
-  animation: fadeInUp 0.5s ease-out 0.3s forwards; /* Stagger slightly after title */
-  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  opacity: 0;
+  animation: fadeInUp 0.4s ease-out 0.1s forwards;
+  transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border-radius: var(--radius) !important; /* From globals.css */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 1px 4px rgba(0,0,0,0.03) !important; /* Softer shadow */
 }
 
 .dashboard-layout .ant-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.06);
+  transform: translateY(-3px); /* Less hover effect */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
 }
 
-.summary-card-value .ant-statistic-content-value {
+.dashboard-layout .ant-card .ant-card-head {
+  padding: 0 16px; /* Compact card head */
+  min-height: 40px;
+  font-size: 16px; /* Smaller title for card heads if using AntD title */
+}
+.dashboard-layout .ant-card .ant-card-body {
+  padding: 16px !important; /* Ensure compact padding, important to override AntD defaults */
+}
+
+
+/* Summary Card Specifics */
+.summary-card .ant-statistic-title {
+  font-size: 12px !important;
+  color: hsl(var(--muted-foreground)) !important;
+  margin-bottom: 2px !important;
+}
+.summary-card .ant-statistic-content {
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+}
+.summary-card .summary-card-trend-text {
+  font-size: 12px !important;
+  margin-left: 4px !important;
+}
+
+
+/* Sales Card Specifics */
+.sales-card .ant-statistic-content-value {
   font-size: 24px !important;
   font-weight: bold !important;
+  line-height: 1.2 !important;
+}
+.sales-card .sales-card-subtext {
+  color: hsl(var(--muted-foreground));
+  font-size: 12px !important;
+  margin-top: 2px !important;
 }
 
-.summary-card-trend {
-  font-size: 12px;
-  margin-left: 8px;
-}
-
-.summary-card-trend.positive {
-  color: #38a169; /* Softer green */
-}
-
-.summary-card-trend.negative {
-  color: #e53e3e; /* Softer red */
-}
-
-.sales-card .ant-card-body {
-  padding: 20px;
-}
-
-.sales-card-statistic .ant-statistic-content-value {
-  font-size: 28px !important;
-  font-weight: bold !important;
-}
-
-.sales-card-subtext {
-  color: hsl(var(--muted-foreground)); /* Use theme variable */
-  font-size: 14px;
-  margin-top: 4px;
-}
-
-.sales-card-trend-icon {
-  margin-right: 4px;
-}
-
+/* Chart Card (Monthly Orders) Specifics */
 .chart-card .ant-card-head-title {
-  font-size: 18px !important;
-  font-weight: bold !important;
-  color: hsl(var(--foreground)); /* Use theme variable */
+  font-size: 16px !important; /* Compact title */
+  font-weight: 600 !important;
 }
 .chart-card .ant-card-body {
-    padding-top: 20px; 
+    padding: 16px !important; 
 }
 
-
-.sidebar-metric-card .ant-statistic-content-value {
-  font-size: 22px !important;
-  font-weight: bold !important;
-}
-
+/* Table Section Card Specifics */
 .table-section .ant-card-head-title {
-  font-size: 18px !important;
-  font-weight: bold !important;
-  color: hsl(var(--foreground)); /* Use theme variable */
+  font-size: 16px !important; /* Compact title */
+  font-weight: 600 !important;
+}
+.table-section .ant-table-thead > tr > th {
+  font-size: 12px !important;
+  padding: 8px 8px !important; /* Compact table headers */
+  background-color: hsl(var(--background-page)) !important;
+}
+.table-section .ant-table-tbody > tr > td {
+  font-size: 12px !important;
+  padding: 8px 8px !important; /* Compact table cells */
+}
+.table-section .ant-pagination {
+  font-size: 12px !important;
+  margin-top: 12px !important;
+}
+.table-section .ant-pagination-item,
+.table-section .ant-pagination-prev,
+.table-section .ant-pagination-next {
+  min-width: 24px !important;
+  height: 24px !important;
+  line-height: 22px !important;
 }
 
+
+/* AI Suggestion Card Specifics */
 .ai-suggestion-card .ant-card-head-title {
-  font-size: 18px !important;
-  font-weight: bold !important;
-  color: hsl(var(--foreground)); /* Use theme variable */
+  font-size: 16px !important;
+  font-weight: 600 !important;
 }
-
 .ai-suggestion-card .ant-form-item {
-  margin-bottom: 16px;
+  margin-bottom: 12px; /* Compact form items */
 }
-
+.ai-suggestion-card .ant-form-item-label > label {
+  font-size: 12px;
+}
 .ai-results {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: hsl(var(--card)); /* Use theme var for background */
-  border: 1px solid hsl(var(--border)); /* Use theme var for border */
+  margin-top: 16px;
+  padding: 16px;
+  background-color: hsl(var(--card)); 
+  border: 1px solid hsl(var(--border)); 
   border-radius: var(--radius);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  opacity: 0; /* Initial state for animation */
-  animation: fadeIn 0.5s ease-out 0.2s forwards; /* Delay to animate after parent card */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  opacity: 0;
+  animation: fadeIn 0.4s ease-out 0.1s forwards;
 }
-
-.ai-results h4 { /* Title component from AntD might need more specific selector or styled via props */
+.ai-results h4 {
   margin-top: 0;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   color: hsl(var(--primary));
   font-weight: 600;
+  font-size: 14px;
 }
-
 .ai-results p {
-  margin-bottom: 10px;
-  line-height: 1.7;
+  margin-bottom: 8px;
+  line-height: 1.6;
   color: hsl(var(--foreground));
+  font-size: 12px;
 }
-
 .ai-results p strong {
     color: hsl(var(--primary));
 }
 
-/* Subtle hover effect for buttons */
+/* Top Sellers Card - Unique Styling */
+.top-sellers-card {
+  background-color: hsl(var(--primary)) !important;
+  color: hsl(var(--primary-foreground)) !important;
+}
+.top-sellers-card .ant-typography,
+.top-sellers-card .ant-statistic-content-value,
+.top-sellers-card .ant-statistic-content-suffix,
+.top-sellers-card .ant-space-item > .ant-typography {
+  color: hsl(var(--primary-foreground)) !important;
+}
+
+
+/* Sidebar Metric Card (Compact version) */
+.sidebar-metric-compact-card .ant-card-body {
+  padding: 12px !important;
+}
+.sidebar-metric-compact-card .ant-statistic-content {
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+}
+
+
+/* Subtle hover effect for buttons, if not handled by AntD theme */
 .ant-btn-primary:hover, 
 .ant-btn-default:hover {
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 .ant-btn {
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+  border-radius: calc(var(--radius) - 2px) !important; /* slightly less rounded buttons */
 }
 
+/* Ensure Tailwind utility classes can be used for icon backgrounds/colors */
+.bg-sky-500 { background-color: #0ea5e9 !important; }
+.text-white { color: white !important; }
+.bg-red-500 { background-color: #ef4444 !important; }
+.bg-yellow-500 { background-color: #eab308 !important; }
+.bg-blue-500 { background-color: #3b82f6 !important; }
+
+.bg-sky-100 { background-color: #e0f2fe !important; }
+.text-sky-600 { color: #0284c7 !important; }
+.bg-red-100 { background-color: #fee2e2 !important; }
+.text-red-600 { color: #dc2626 !important; }
+
+
+/* Trend text colors using Tailwind classes for consistency if needed */
+.text-green-500 { color: #22c55e !important; }
+.text-red-500 { color: #ef4444 !important; }

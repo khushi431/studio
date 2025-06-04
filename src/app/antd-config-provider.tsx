@@ -10,24 +10,26 @@ import React from 'react';
 // Ant Design theme configuration
 const theme = {
   token: {
-    colorPrimary: '#73A3B1', // Soft blue
-    colorLink: '#A984D3',   // Light purple for links/interactive elements
-    colorInfo: '#73A3B1',   // Soft blue for info elements
+    colorPrimary: '#318f8a', // Teal (hsl(175, 55%, 40%))
+    colorLink: '#318f8a',   // Teal for links
+    colorInfo: '#318f8a',   // Teal for info elements
     fontFamily: "'PT Sans', sans-serif",
-    // AntD will use colorPrimary for success by default for Statistic, let's customize if needed
-    // colorSuccess: '#52c41a', // Default AntD green, can be customized
-    // colorError: '#ff4d4f', // Default AntD red
-    // colorWarning: '#faad14' // Default AntD orange/yellow
+    // colorSuccess: '#52c41a', 
+    // colorError: '#ff4d4f', 
+    // colorWarning: '#faad14' 
   },
   components: {
     Card: {
       colorBgContainer: '#ffffff', // Ensure cards are white by default
+      paddingLG: 16, // Compact card padding
     },
     Button: {
-      // Example: If accent color #A984D3 should be default button color
-      // colorPrimary: '#A984D3', 
-      // colorPrimaryHover: '#BF9AE0', // Lighter purple for hover
-      // colorPrimaryActive: '#9870C0', // Darker purple for active
+      // colorPrimary: '#318f8a', 
+      // colorPrimaryHover: '#2A7A74', 
+      // colorPrimaryActive: '#23655F',
+    },
+    Statistic: {
+      contentFontSize: 22,
     }
   }
 };
