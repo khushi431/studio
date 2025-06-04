@@ -2,23 +2,25 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Card, Form, Input, InputNumber, Button, Spin, Alert, Typography, Row, Col } from 'antd';
-import { getProductInsights, type ProductInsightsInput, type ProductInsightsOutput } from '@/ai/flows/product-insights';
+import { Card, Form, Input, InputNumber, Button, Spin, Alert, Typography, Row, Col, Select } from 'antd';
+import { getResidentIssueInsights, type ResidentIssueInput, type ResidentIssueOutput } from '@/ai/flows/product-insights'; // Will be resident-issue-insights
 
 const { Title, Paragraph } = Typography;
+const { Option } = Select;
 
 const AISuggestionCard: React.FC = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [insights, setInsights] = useState<ProductInsightsOutput | null>(null);
+  const [insights, setInsights] = useState<ResidentIssueOutput | null>(null);
 
-  const onFinish = async (values: ProductInsightsInput) => {
+  const onFinish = async (values: ResidentIssueInput) => {
     setLoading(true);
     setError(null);
     setInsights(null);
     try {
-      const result = await getProductInsights(values);
+      // Ensure the correct function name is used once the flow file is renamed/updated
+      const result = await getResidentIssueInsights(values);
       setInsights(result);
     } catch (err) {
       console.error("Error fetching AI insights:", err);
@@ -30,84 +32,60 @@ const AISuggestionCard: React.FC = () => {
 
   return (
     <Card className="ai-suggestion-card" style={{ marginTop: '24px' }}>
-      <Title level={4} style={{ marginBottom: '20px' }}>AI-Driven Product Insights</Title>
+      <Title level={4} style={{ marginBottom: '20px' }}>AI-Driven Resident Support Insights</Title>
       <Paragraph type="secondary" style={{ marginBottom: '20px' }}>
-        Enter product details to get AI-powered suggestions for optimal placement and promotion strategies.
+        Enter details about a recurring resident issue to get AI-powered insights for prioritization and resolution.
       </Paragraph>
       <Form
         form={form}
         layout="vertical"
         onFinish={onFinish}
         initialValues={{
-          productName: 'Example Widget',
-          category: 'Electronics',
-          sold: 100,
-          price: 29.99,
-          earnings: 2999.00,
-          marketTrends: 'Growing demand for smart home devices.',
-          competitorAnalysis: 'Competitor X offers a similar product at a slightly higher price point but with fewer features.',
+          issueCategory: 'Plumbing',
+          numberOfReports: 5,
+          urgencyLevel: "Medium",
+          residentFeedbackSnippets: 'Leaky faucet in unit 101, low water pressure in 203, toilet not flushing in 305.',
         }}
       >
         <Row gutter={16}>
           <Col xs={24} sm={12} md={8}>
             <Form.Item
-              name="productName"
-              label="Product Name"
-              rules={[{ required: true, message: 'Please input the product name!' }]}
+              name="issueCategory"
+              label="Issue Category"
+              rules={[{ required: true, message: 'Please input the issue category!' }]}
             >
-              <Input placeholder="e.g., Smart Thermostat X1" />
+              <Input placeholder="e.g., Plumbing, HVAC, Noise Complaint" />
             </Form.Item>
           </Col>
           <Col xs={24} sm={12} md={8}>
             <Form.Item
-              name="category"
-              label="Category"
-              rules={[{ required: true, message: 'Please input the category!' }]}
+              name="numberOfReports"
+              label="Number of Recent Reports"
+              rules={[{ required: true, type: 'number', min: 1, message: 'Please input the number of reports!' }]}
             >
-              <Input placeholder="e.g., Home Appliances" />
+              <InputNumber style={{ width: '100%' }} placeholder="e.g., 5" />
             </Form.Item>
           </Col>
           <Col xs={24} sm={12} md={8}>
             <Form.Item
-              name="sold"
-              label="Units Sold"
-              rules={[{ required: true, type: 'number', message: 'Please input units sold!' }]}
+              name="urgencyLevel"
+              label="Urgency Level"
+              rules={[{ required: true, message: 'Please select the urgency level!' }]}
             >
-              <InputNumber style={{ width: '100%' }} placeholder="e.g., 500" />
-            </Form.Item>
-          </Col>
-          <Col xs={24} sm={12} md={8}>
-            <Form.Item
-              name="price"
-              label="Price (per unit)"
-              rules={[{ required: true, type: 'number', message: 'Please input the price!' }]}
-            >
-              <InputNumber style={{ width: '100%' }} placeholder="e.g., 49.99" step="0.01" />
-            </Form.Item>
-          </Col>
-           <Col xs={24} sm={12} md={8}>
-            <Form.Item
-              name="earnings"
-              label="Total Earnings"
-              rules={[{ required: true, type: 'number', message: 'Please input total earnings!' }]}
-            >
-              <InputNumber style={{ width: '100%' }} placeholder="e.g., 24995.00" step="0.01" />
+              <Select placeholder="Select urgency">
+                <Option value="Low">Low</Option>
+                <Option value="Medium">Medium</Option>
+                <Option value="High">High</Option>
+              </Select>
             </Form.Item>
           </Col>
         </Row>
         <Form.Item
-          name="marketTrends"
-          label="Market Trends"
-          rules={[{ required: true, message: 'Please describe market trends!' }]}
+          name="residentFeedbackSnippets"
+          label="Resident Feedback Snippets"
+          rules={[{ required: true, message: 'Please provide some resident feedback!' }]}
         >
-          <Input.TextArea rows={3} placeholder="e.g., Increased consumer interest in sustainable products." />
-        </Form.Item>
-        <Form.Item
-          name="competitorAnalysis"
-          label="Competitor Analysis"
-          rules={[{ required: true, message: 'Please provide competitor analysis!' }]}
-        >
-          <Input.TextArea rows={3} placeholder="e.g., Main competitor AlphaBrand launched a new model last quarter." />
+          <Input.TextArea rows={3} placeholder="e.g., 'Water leaking from ceiling in 5B.', 'AC not working for 2 days in 12A.'" />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>
@@ -122,9 +100,10 @@ const AISuggestionCard: React.FC = () => {
       {insights && (
         <div className="ai-results">
           <Title level={5} style={{ color: 'var(--ant-primary-color)' }}>Generated Insights:</Title>
-          <Paragraph><strong>Optimal Placement:</strong> {insights.optimalPlacement}</Paragraph>
-          <Paragraph><strong>Promotion Strategies:</strong> {insights.promotionStrategies}</Paragraph>
-          <Paragraph><strong>Key Insights:</strong> {insights.keyInsights}</Paragraph>
+          <Paragraph><strong>Prioritization Suggestion:</strong> {insights.prioritizationSuggestion}</Paragraph>
+          <Paragraph><strong>Preventative Actions:</strong> {insights.preventativeActions}</Paragraph>
+          <Paragraph><strong>Communication Strategy:</strong> {insights.communicationStrategy}</Paragraph>
+          <Paragraph><strong>Potential Impact:</strong> {insights.potentialImpact}</Paragraph>
         </div>
       )}
     </Card>

@@ -1,20 +1,4 @@
-// This file is being replaced by resident-issue-insights.ts
-// and can be removed or archived.
-// For the purpose of this operation, its content is effectively deleted.
-// To avoid breaking existing imports immediately if any were missed,
-// an empty file or a comment indicating its deprecation could be left.
-// However, as per instructions, we are replacing the content with the new flow.
-// Actually, the instruction is to create a *new* flow and update dev.ts.
-// So this file should be DELETED. But the system doesn't support deletion.
-// Let's rename it conceptually and provide the new content for the NEW file name.
-// The prompt asks to change data, so old AI flow is not relevant.
-// To avoid confusion, I will leave this file as is, and create a NEW flow file.
-// The user's instructions implied changing the *purpose* of the AI card,
-// which means the old flow is no longer suitable.
-// The instructions said:
-// "AI Suggestion Card (`src/components/dashboard/AISuggestionCard.tsx` and `src/ai/flows/product-insights.ts`)"
-// This implies the `product-insights.ts` should be *modified* or *repurposed*.
-
+// src/ai/flows/resident-issue-insights.ts
 'use server';
 /**
  * @fileOverview An AI flow for prioritizing resident-reported issues and suggesting actions.
@@ -65,6 +49,7 @@ const residentIssueInsightsPrompt = ai.definePrompt({
   4. The potential impact on residents if not addressed (e.g., "Decreased resident satisfaction, potential safety hazards").
 
   Your response should be structured, actionable, and empathetic to resident concerns.
+  Be concise and clear.
   `,
 });
 

@@ -1,4 +1,4 @@
 import { config } from 'dotenv';
 config();
 
-import '@/ai/flows/product-insights.ts';
+import '@/ai/flows/resident-issue-insights.ts';
