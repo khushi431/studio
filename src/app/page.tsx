@@ -1,3 +1,4 @@
+
 // src/app/page.tsx
 "use client";
 
@@ -19,12 +20,15 @@ import { LineChart, Line, ResponsiveContainer, Tooltip } from 'recharts';
 
 import SummaryCard from '@/components/dashboard/SummaryCard';
 import SalesCard from '@/components/dashboard/SalesCard';
-import MonthlyOrdersChart from '@/components/dashboard/MonthlyOrdersChart';
+import MonthlyOrdersChart from '@/components/dashboard/MonthlyOrdersChart'; // Will be MonthlyVisitorAnalyticsChart
 import TopSellersCard from '@/components/dashboard/TopSellersCard';
 import SidebarMetricCard from '@/components/dashboard/SidebarMetricCard';
 import ProductTable from '@/components/dashboard/ProductTable'; // Will be ServiceRequestTable
 import CategoryTable from '@/components/dashboard/CategoryTable'; // Will be AmenityUsageTable
 import AISuggestionCard from '@/components/dashboard/AISuggestionCard';
+import AmenityUsagePieChart from '@/components/dashboard/AmenityUsagePieChart';
+import ServiceRequestResolutionTimeChart from '@/components/dashboard/ServiceRequestResolutionTimeChart';
+
 
 import './dashboard.css'; // Import custom CSS
 
@@ -189,6 +193,16 @@ export default function DashboardPage() {
                 chartColor="hsl(var(--destructive))" // Or a green color
               />
             </Space>
+          </Col>
+        </Row>
+        
+        {/* New Row for Additional Charts */}
+        <Row gutter={[16, 16]} style={{ marginBottom: '16px' }}>
+          <Col xs={24} lg={12}>
+            <AmenityUsagePieChart />
+          </Col>
+          <Col xs={24} lg={12}>
+            <ServiceRequestResolutionTimeChart />
           </Col>
         </Row>
 
