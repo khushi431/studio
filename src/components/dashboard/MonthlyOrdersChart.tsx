@@ -21,7 +21,7 @@ const amenityBookingData = [
 ];
 
 const totalBookingsColor = 'hsl(var(--primary))'; // Teal
-const approvedBookingsColor = 'hsl(var(--chart-2))'; // Darker Teal/Green
+const approvedBookingsColor = 'hsl(var(--chart-4))'; // Yellow (changed from chart-2)
 const cancelledBookingsColor = 'hsl(var(--destructive))'; // Red
 
 const menuItems: MenuProps['items'] = [
