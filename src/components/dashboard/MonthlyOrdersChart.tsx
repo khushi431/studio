@@ -1,28 +1,28 @@
-// src/components/dashboard/MonthlyOrdersChart.tsx (Now Monthly Visitor Analytics)
+// src/components/dashboard/MonthlyOrdersChart.tsx (Now Monthly Amenity Booking Analytics)
 "use client";
 
 import { Card, Typography, Dropdown, Button, Menu, Space } from 'antd';
-import { DownOutlined } from '@ant-design/icons'; // MenuOutlined removed for now
+import { DownOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const { Title } = Typography;
 
-const visitorData = [
-  { month: 'Aug', residentsGuests: 120, contractors: 40, deliveryServices: 80 },
-  { month: 'Sep', residentsGuests: 150, contractors: 55, deliveryServices: 90 },
-  { month: 'Oct', residentsGuests: 130, contractors: 45, deliveryServices: 85 },
-  { month: 'Nov', residentsGuests: 160, contractors: 60, deliveryServices: 100 },
-  { month: 'Dec', residentsGuests: 180, contractors: 70, deliveryServices: 110 },
-  { month: 'Jan', residentsGuests: 140, contractors: 50, deliveryServices: 95 },
-  { month: 'Feb', residentsGuests: 170, contractors: 65, deliveryServices: 105 },
-  { month: 'Mar', residentsGuests: 155, contractors: 58, deliveryServices: 92 },
-  { month: 'Apr', residentsGuests: 165, contractors: 62, deliveryServices: 98 },
+const amenityBookingData = [
+  { month: 'Aug', totalBookings: 120, approvedBookings: 90, cancelledBookings: 10 },
+  { month: 'Sep', totalBookings: 150, approvedBookings: 110, cancelledBookings: 15 },
+  { month: 'Oct', totalBookings: 130, approvedBookings: 100, cancelledBookings: 12 },
+  { month: 'Nov', totalBookings: 160, approvedBookings: 125, cancelledBookings: 18 },
+  { month: 'Dec', totalBookings: 180, approvedBookings: 140, cancelledBookings: 20 },
+  { month: 'Jan', totalBookings: 140, approvedBookings: 105, cancelledBookings: 13 },
+  { month: 'Feb', totalBookings: 170, approvedBookings: 130, cancelledBookings: 16 },
+  { month: 'Mar', totalBookings: 155, approvedBookings: 115, cancelledBookings: 14 },
+  { month: 'Apr', totalBookings: 165, approvedBookings: 120, cancelledBookings: 17 },
 ];
 
-const residentsGuestsColor = 'hsl(var(--primary))'; // Teal
-const contractorsColor = '#FFC107'; // Amber/Yellow
-const deliveryServicesColor = '#795548'; // Brown
+const totalBookingsColor = 'hsl(var(--primary))'; // Teal
+const approvedBookingsColor = 'hsl(var(--chart-2))'; // Darker Teal/Green
+const cancelledBookingsColor = 'hsl(var(--destructive))'; // Red
 
 const menuItems: MenuProps['items'] = [
   { key: '1', label: 'Last 3 Months' },
@@ -33,11 +33,11 @@ const menuItems: MenuProps['items'] = [
 
 const menu = <Menu items={menuItems} />;
 
-const MonthlyVisitorAnalyticsChart: React.FC = () => {
+const MonthlyAmenityBookingChart: React.FC = () => {
   return (
     <Card className="chart-card" style={{ height: '100%' }} bodyStyle={{padding: '16px'}}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-        <Title level={5} style={{ margin: 0, fontSize: '16px', fontWeight: 600 }}>Monthly Visitor Analytics</Title>
+        <Title level={5} style={{ margin: 0, fontSize: '16px', fontWeight: 600 }}>Monthly Amenity Booking Analytics</Title>
         <Space>
           <Dropdown overlay={menu} trigger={['click']}>
             <Button size="small" type="text" style={{fontSize: '12px', color: 'hsl(var(--primary))'}}>
@@ -48,7 +48,7 @@ const MonthlyVisitorAnalyticsChart: React.FC = () => {
       </div>
       <ResponsiveContainer width="100%" height={280}>
         <BarChart
-          data={visitorData}
+          data={amenityBookingData}
           margin={{
             top: 5, right: 0, left: -25, bottom: 5,
           }}
@@ -64,13 +64,13 @@ const MonthlyVisitorAnalyticsChart: React.FC = () => {
             labelStyle={{ fontWeight: 'bold', color: 'hsl(var(--foreground))' }}
           />
           <Legend wrapperStyle={{ fontSize: '10px', paddingTop: '10px' }} iconSize={8} />
-          <Bar dataKey="residentsGuests" fill={residentsGuestsColor} name="Residents' Guests" radius={[3, 3, 0, 0]} barSize={8} />
-          <Bar dataKey="contractors" fill={contractorsColor} name="Contractors" radius={[3, 3, 0, 0]} barSize={8} />
-          <Bar dataKey="deliveryServices" fill={deliveryServicesColor} name="Delivery Services" radius={[3, 3, 0, 0]} barSize={8} />
+          <Bar dataKey="totalBookings" fill={totalBookingsColor} name="Total Bookings" radius={[3, 3, 0, 0]} barSize={8} />
+          <Bar dataKey="approvedBookings" fill={approvedBookingsColor} name="Approved Bookings" radius={[3, 3, 0, 0]} barSize={8} />
+          <Bar dataKey="cancelledBookings" fill={cancelledBookingsColor} name="Cancelled Bookings" radius={[3, 3, 0, 0]} barSize={8} />
         </BarChart>
       </ResponsiveContainer>
     </Card>
   );
 };
 
-export default MonthlyVisitorAnalyticsChart;
+export default MonthlyAmenityBookingChart;
