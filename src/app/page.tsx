@@ -28,6 +28,8 @@ import CategoryTable from '@/components/dashboard/CategoryTable'; // Will be Ame
 import AISuggestionCard from '@/components/dashboard/AISuggestionCard';
 import AmenityUsagePieChart from '@/components/dashboard/AmenityUsagePieChart';
 import ServiceRequestResolutionTimeChart from '@/components/dashboard/ServiceRequestResolutionTimeChart';
+import EmailStatusChart from '@/components/dashboard/EmailStatusChart';
+import RequestTrendChart from '@/components/dashboard/RequestTrendChart';
 
 
 import './dashboard.css'; // Import custom CSS
@@ -196,13 +198,23 @@ export default function DashboardPage() {
           </Col>
         </Row>
         
-        {/* New Row for Additional Charts */}
+        {/* New Row for Additional Charts (Amenity Usage, Service Request Resolution) */}
         <Row gutter={[16, 16]} style={{ marginBottom: '16px' }}>
           <Col xs={24} lg={12}>
             <AmenityUsagePieChart />
           </Col>
           <Col xs={24} lg={12}>
             <ServiceRequestResolutionTimeChart />
+          </Col>
+        </Row>
+
+        {/* New Row for Email Status and Request Trends */}
+        <Row gutter={[16, 16]} style={{ marginBottom: '16px' }}>
+          <Col xs={24} lg={12}>
+            <EmailStatusChart />
+          </Col>
+          <Col xs={24} lg={12}>
+            <RequestTrendChart />
           </Col>
         </Row>
 
